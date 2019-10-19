@@ -21,7 +21,7 @@ typedef struct {
     uint8_t height;
 } PE_mGFX_Font_t;
 
-typedef void (*PE_mGFX_flush_t) (uint8_t reg, const uint8_t *data, uint16_t size);
+typedef void (*PE_mGFX_flush_t) (const uint8_t *data, uint16_t size);
 
 class PE_mGFX {
 private:

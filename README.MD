@@ -6,8 +6,22 @@ This library use full display size buffer so MCU must have enough RAM.
 
 ```cpp
 #include <PE_mGFX.h>
+#include <PE_mGFX_Font_05x07.h>
 
-PE_mGFX mGFX = PE_mGFX(128, 64);
+static unsigned char bitmap0Data [] = {/* bitma bytes here */};
+
+PE_mGFX_Bitmap_t bitmap = {
+    .data = bitmap0Data,
+    .width = 128,
+    .height = 64,
+    .lsb = 0,
+};
+
+void mGFX_flush(const uint8_t *data, uint16_t size) {
+    //TODO write to display logic here
+}
+
+PE_mGFX mGFX = PE_mGFX(128, 64, mGFX_flush);
 
 int main(void) {
     // First need to initialize graphics to create internal buffer
@@ -15,18 +29,26 @@ int main(void) {
 
     // Then you can draw
 
-    // Draw pixel
-    mGFX.pixel(/*x*/ 5, /*y*/ 5, /*color*/ PE_mGFX_WHITE);
-    
-    // Draw line
-    mGFX.line(/*x1*/ 15, /*y1*/ 15, /*x2*/ 30, /*y2*/ 10, /*color*/ PE_mGFX_WHITE);
+    mGFX.line(0, 0, 127, 63, PE_mGFX_WHITE);
+    mGFX.line(0, 63, 127, 0, PE_mGFX_WHITE);
+    mGFX.rectangle(0, 0, 127, 63, PE_mGFX_WHITE);
+    mGFX.circle(63, 31, 31, PE_mGFX_WHITE);
 
-    // Draw rectangle
-    mGFX.rectangle(/*x1*/ 64, /*y1*/ 32, /*x2*/ 127, /*y2*/ 63, /*color*/ PE_mGFX_WHITE);
+    // Flush buffer to display
+    mGFX.flush();
 
-    // Draw rectangle
-    mGFX.circle(/*x*/ 64, /*x*/ 32, /*radius*/ 20, /*color*/ PE_mGFX_WHITE);
+    // Clear buffer
+    mGFX.flush();
 
-    //TODO draw bitmap and strings
+    // Draw strings
+    mGFX.string(0, 0, "Hello World", &PE_mGFX_Font_05x07, PE_mGFX_WHITE);
+
+    // Draw bitmaps
+    mGFX.bitmap(0, 16, &bitmap, PE_mGFX_WHITE);
+
+    // Flush buffer to display
+    mGFX.flush();
 }
 ```
+
+For more information about methods arguments see in ```PE_mGFX.h``` file.
