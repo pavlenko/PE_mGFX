@@ -21,9 +21,12 @@ typedef struct {
     uint8_t height;
 } PE_mGFX_Font_t;
 
+typedef void (*PE_mGFX_flush_t) (uint8_t reg, const uint8_t *data, uint16_t size);
+
 class PE_mGFX {
 private:
-    uint8_t *_buffer;
+    uint8_t *_buffer = nullptr;
+    PE_mGFX_flush_t _flush = nullptr;
     uint16_t _width;
     uint16_t _height;
 
@@ -37,6 +40,15 @@ public:
     PE_mGFX(uint16_t width, uint16_t height);
 
     /**
+     * Create GFX canvas with flush support
+     *
+     * @param width
+     * @param height
+     * @param flush
+     */
+    PE_mGFX(uint16_t width, uint16_t height, PE_mGFX_flush_t flush);
+
+    /**
      * Initialize internal buffer
      *
      * @return
@@ -47,6 +59,11 @@ public:
      * Clear buffer data
      */
     void clear();
+
+    /**
+     * Flush buffer data to device
+     */
+    void flush();
 
     /**
      * Draw pixel

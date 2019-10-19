@@ -4,11 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-PE_mGFX::PE_mGFX(uint16_t width, uint16_t height) {
-    _width  = width;
-    _height = height;
-    _buffer = nullptr;
-}
+PE_mGFX::PE_mGFX(uint16_t width, uint16_t height): _width(width), _height(height) {}
+
+PE_mGFX::PE_mGFX(uint16_t width, uint16_t height, PE_mGFX_flush_t flush): _width(width), _height(height), _flush(flush) {}
 
 bool PE_mGFX::initialize() {
     if ((_buffer != nullptr) || !(_buffer = (uint8_t *) malloc(_width * ((_height + 7) / 8)))) {
@@ -22,6 +20,12 @@ bool PE_mGFX::initialize() {
 
 void PE_mGFX::clear() {
     memset(_buffer, 0, _width * ((_height + 7) / 8));
+}
+
+void PE_mGFX::flush() {
+    if (_flush) {
+        _flush(_buffer, _width * ((_height + 7) / 8));
+    }
 }
 
 void PE_mGFX::pixel(uint16_t x, uint16_t y, PE_mGFX_Color_t color) {
