@@ -3,6 +3,10 @@
 
 #include <stdint.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef enum {
     PE_mGFX_BLACK,
     PE_mGFX_WHITE,
@@ -26,6 +30,10 @@ typedef struct {
     uint8_t width;
     uint8_t height;
 } PE_mGFX_Canvas_t;
+
+#ifdef __cplusplus
+}
+#endif
 
 typedef void (*PE_mGFX_flush_t) (const uint8_t *data, uint16_t size);
 
@@ -159,6 +167,10 @@ public:
     uint8_t * getBufferData();
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /**
  * Draw pixel
  *
@@ -238,5 +250,9 @@ void PE_mGFX_symbol(PE_mGFX_Canvas_t *canvas, uint16_t x, uint16_t y, char symbo
  * @param color
  */
 void PE_mGFX_string(PE_mGFX_Canvas_t *canvas, uint16_t x, uint16_t y, const char *string, PE_mGFX_Font_t *font, PE_mGFX_Color_t color);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif //PE_MGFX_H
