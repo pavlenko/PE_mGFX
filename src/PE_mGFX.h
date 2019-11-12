@@ -1,39 +1,7 @@
 #ifndef PE_MGFX_H
 #define PE_MGFX_H
 
-#include <stdint.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-typedef enum {
-    PE_mGFX_BLACK,
-    PE_mGFX_WHITE,
-} PE_mGFX_Color_t;
-
-typedef struct {
-    uint8_t *data;
-    uint16_t width;
-    uint16_t height;
-    uint8_t lsb;
-} PE_mGFX_Bitmap_t;
-
-typedef struct {
-    const uint16_t *bitmap;
-    uint8_t width;
-    uint8_t height;
-} PE_mGFX_Font_t;
-
-typedef struct {
-    uint8_t *data;
-    uint8_t width;
-    uint8_t height;
-} PE_mGFX_Canvas_t;
-
-#ifdef __cplusplus
-}
-#endif
+#include "PE_mGFX_types.h"
 
 typedef void (*PE_mGFX_flush_t) (const uint8_t *data, uint16_t size);
 
