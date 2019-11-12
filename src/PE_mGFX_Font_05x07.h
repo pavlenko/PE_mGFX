@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include "PE_mGFX_types.h"
+#include "PE_mGFX.h"
 
 extern PE_mGFX_Font_t PE_mGFX_Font_05x07;
 
